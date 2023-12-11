@@ -1,0 +1,45 @@
+{
+  "new": {
+    "Name": "Mailton Um",
+    "FistName": "Mailton",
+    "LastName": "Um",
+    "nationality": "Brasileiro",
+    "Passport": "CS265436",
+    "RG": "13678490",
+    "birthdate": "19-07-1988",
+    "function": "Administrador"
+  },
+  "toInvite": {
+    "function": "Administrador"
+  },
+  "distance": {
+    "km": "1603",
+    "description": "Deslocamento evento",
+    "establishment": "Uber",
+    "report": "Report Automação"
+  },
+  "distanceNotRefundable": {
+    "km": "9856",
+    "description": "Viagem",
+    "establishment": "Carro particular",
+    "report": "Report Automação"
+  },
+  "mapDistance": {
+    "description": "Deslocamento Palestra Mapa",
+    "pointA": "ufmg",
+    "selectPointA": "UFMG - Avenida Presidente Antônio Carlos - Pampulha, Belo Horizonte",
+    "pointB": "Minas tênis Náutico",
+    "selectPointB": "Minas Tênis Náutico Clube - Avenida Princesa Diana - Alphaville, Nova Lima - MG",
+    "establishment": "Carro particular",
+    "report": "Report Automação"
+  },
+  "mapDistanceNoReceipt": {
+    "description": "Deslocamento UFMG",
+    "pointA": "Nobile Hotel",
+    "selectPointA": "Nobile Hotel Belo Horizonte - Rua São Miguel - Itapoã, Belo Horizonte - MG",
+    "pointB": "ufmg",
+    "selectPointB": "UFMG - Avenida Presidente Antônio Carlos - Pampulha, Belo Horizonte - MG",
+    "establishment": "Carro particular",
+    "report": "Report Automação"
+  }
+}
