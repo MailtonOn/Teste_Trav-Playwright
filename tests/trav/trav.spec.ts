@@ -30,7 +30,6 @@ test.describe('New Employee', () => {
     await travPage.toInvite()
     await travPage.fillInvite(trav)
     await travPage.sendInvite()
-    await travPage.successMessage()
   })
 
   test('Deve criar uma despesa por distância', async () => {

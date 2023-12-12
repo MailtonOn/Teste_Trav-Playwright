@@ -12,7 +12,9 @@
   "scripts": {
     "start": "playwright test",
     "debug": "playwright test --debug",
-    "headless": "playwright test --headless"
+    "trav": "playwright test trav --ui"
+
+    
   },
   "dependencies": {
     "dotenv": "^16.3.1",
