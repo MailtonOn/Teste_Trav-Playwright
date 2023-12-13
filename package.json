@@ -12,7 +12,8 @@
   "scripts": {
     "start": "playwright test",
     "debug": "playwright test --debug",
-    "trav": "playwright test trav --ui"
+    "travel": "playwright test travel --ui",
+    "expense": "playwright test expense --ui"
 
     
   },
