@@ -21,6 +21,11 @@
   dependencies:
     undici-types "~5.26.4"
 
+date-fns@^3.0.0-rc.2:
+  version "3.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-3.0.0-rc.2.tgz#e4adb2a79845cc19a8dcf42a204725295969c89e"
+  integrity sha512-3MAy/Mc7i7LVIayaPnHCNhah7Zaj9/9G9v4pmdJNvMJ+mPahQtrQ4DWm6YxkQjvhRB4gBnjV5UB1ll5ZQxE31w==
+
 dotenv@^16.3.1:
   version "16.3.1"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.3.1.tgz#369034de7d7e5b120972693352a3bf112172cc3e"
