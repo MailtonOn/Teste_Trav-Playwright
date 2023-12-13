@@ -1,8 +1,8 @@
-import { TravModel } from '../fixtures/trav.model';
+import { TravModel } from '../fixtures/travel.model';
 import { test } from '@playwright/test'
 import { LoginPage } from '../support/pages/login'
 import { TravPage } from '../support/pages/trav'
-import traveler from '../fixtures/traveler.json'
+import travel from '../fixtures/travel.json'
 
 let loginPage: LoginPage
 let travPage: TravPage
@@ -15,16 +15,16 @@ test.beforeEach(async ({ page }) => {
 })
 
 test.describe('New Employee', () => {
-  test('Deve criar um novo colaborador', async () => {
-    const trav = traveler.new as unknown as TravModel
+  test.only('Deve criar um novo colaborador', async () => {
+    const trav = travel.new as unknown as TravModel
 
     await travPage.goToEmployees()
     await travPage.fill(trav)
     await travPage.saveEmployee()
     await travPage.successMessage()
   })
-  test.only('Deve convidar um colaborador', async () => {
-    const trav = traveler.toInvite as unknown as TravModel
+  test('Deve convidar um colaborador', async () => {
+    const trav = travel.toInvite as unknown as TravModel
 
     await travPage.goToEmployees()
     await travPage.toInvite()
@@ -33,7 +33,7 @@ test.describe('New Employee', () => {
   })
 
   test('Deve criar uma despesa por distância', async () => {
-    const trav = traveler.distance as unknown as TravModel
+    const trav = travel.distance as unknown as TravModel
 
     await travPage.goToEmployees()
     await travPage.saveEmployee()
@@ -41,7 +41,7 @@ test.describe('New Employee', () => {
   })
 
   test('Deve criar uma despesa por distância não reembolsável', async () => {
-    const trav = traveler.distanceNotRefundable as unknown as TravModel
+    const trav = travel.distanceNotRefundable as unknown as TravModel
 
     await travPage.goToEmployees()
     await travPage.toInvite()
@@ -50,7 +50,7 @@ test.describe('New Employee', () => {
   })
 
   test('Deve criar uma despesa por distância com pontos no mapa', async () => {
-    const trav = traveler.mapDistance as unknown as TravModel
+    const trav = travel.mapDistance as unknown as TravModel
 
     await travPage.goToEmployees()
     await travPage.fillMapDistance(trav)
@@ -60,7 +60,7 @@ test.describe('New Employee', () => {
   })
 
   test('Deve criar uma despesa por distância com pontos no mapa sem o recibo', async () => {
-    const trav = traveler.mapDistanceNoReceipt as unknown as TravModel
+    const trav = travel.mapDistanceNoReceipt as unknown as TravModel
 
     await travPage.goToEmployees()
     await travPage.fillMapDistance(trav)

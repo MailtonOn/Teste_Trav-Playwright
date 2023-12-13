@@ -56,8 +56,7 @@ export class TravPage {
     }
 
     async sendInvite() {
-        await this.page.click('//body/div[6]/div[2]/div/div[3]/div/div[2]/button')
-        // await this.page.getByRole('button', { name: "Convidar", exact: true }).click()
+        await this.page.getByRole('button', { name: "Convidar", exact: true }).nth(1).click()
         await expect(this.page.locator('#swal2-content')).toHaveText('Aguarde enquanto processamos...')
         await expect(this.page.locator('#swal2-content')).toHaveText('Usuário convidado')
     }
