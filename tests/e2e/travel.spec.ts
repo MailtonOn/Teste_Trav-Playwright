@@ -1,8 +1,8 @@
-import { TravModel } from '../fixtures/trav.model';
+import { TravModel } from '../fixtures/travel.model';
 import { test } from '@playwright/test'
 import { LoginPage } from '../support/pages/login'
 import { TravPage } from '../support/pages/trav'
-import traveler from '../fixtures/traveler.json'
+import traveler from '../fixtures/travel.json'
 
 let loginPage: LoginPage
 let travPage: TravPage
