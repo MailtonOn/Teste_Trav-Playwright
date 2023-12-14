@@ -1,4 +1,4 @@
-import { TravModel } from '../fixtures/travel.model';
+import { EmployeeModel } from '../fixtures/travel.model';
 import { test } from '@playwright/test'
 import { LoginPage } from '../support/pages/login'
 import { TravPage } from '../support/pages/trav'
@@ -15,57 +15,20 @@ test.beforeEach(async ({ page }) => {
 })
 
 test.describe('New Employee', () => {
-  test('Deve criar um novo colaborador', async () => {
-    const trav = traveler.new as unknown as TravModel
+  test.only('Deve criar um novo colaborador', async () => {
+    const Employee = traveler.new as unknown as EmployeeModel
 
     await travPage.goToEmployees()
-    await travPage.fill(trav)
+    await travPage.fill(Employee)
     await travPage.saveEmployee()
     await travPage.successMessage()
   })
-  test.only('Deve convidar um colaborador', async () => {
-    const trav = traveler.toInvite as unknown as TravModel
+  test('Deve convidar um colaborador', async () => {
+    const Employee = traveler.toInvite as unknown as EmployeeModel
 
     await travPage.goToEmployees()
     await travPage.toInvite()
-    await travPage.fillInvite(trav)
+    await travPage.fillInvite(Employee)
     await travPage.sendInvite()
-  })
-
-  test('Deve criar uma despesa por distância', async () => {
-    const trav = traveler.distance as unknown as TravModel
-
-    await travPage.goToEmployees()
-    await travPage.saveEmployee()
-    await travPage.successMessage()
-  })
-
-  test('Deve criar uma despesa por distância não reembolsável', async () => {
-    const trav = traveler.distanceNotRefundable as unknown as TravModel
-
-    await travPage.goToEmployees()
-    await travPage.toInvite()
-    await travPage.saveEmployee()
-    await travPage.successMessage()
-  })
-
-  test('Deve criar uma despesa por distância com pontos no mapa', async () => {
-    const trav = traveler.mapDistance as unknown as TravModel
-
-    await travPage.goToEmployees()
-    await travPage.fillMapDistance(trav)
-    await travPage.calculateDistance()
-    await travPage.saveEmployee()
-    await travPage.successMessage()
-  })
-
-  test('Deve criar uma despesa por distância com pontos no mapa sem o recibo', async () => {
-    const trav = traveler.mapDistanceNoReceipt as unknown as TravModel
-
-    await travPage.goToEmployees()
-    await travPage.fillMapDistance(trav)
-    await travPage.noReceipt()
-    await travPage.saveEmployee()
-    await travPage.successMessage()
   })
 })

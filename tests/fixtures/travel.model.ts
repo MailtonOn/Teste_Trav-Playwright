@@ -1,4 +1,4 @@
-export interface TravModel {
+export interface EmployeeModel {
     name: string
     fistName: string
     lastName: string
@@ -6,7 +6,18 @@ export interface TravModel {
     passport: string
     RG: string
     birthdate: string
-    pointB: string
-    selectPointB: string
-    km: string
+}
+
+export interface GoTravelModel {
+    dataIdValue: string,
+    button: string,
+    title: string
+}
+
+export interface TravelModel {
+    partida: string
+    code1: string
+    destino: string
+    goDay: number
+    backDay: number
 }

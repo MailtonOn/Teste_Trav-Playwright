@@ -20,17 +20,17 @@ export class TravPage {
 
     async fill(payload) {
         await this.page.click('.q-btn__wrapper:has-text("Colaborador")')
-        await this.page.fill('//label[contains(text(),"Nome")]/following-sibling::label//input', faker.person.fullName())
-        await this.page.fill('//label[contains(text(),"Primeiro")]/following-sibling::label//input', faker.person.firstName())
-        await this.page.fill('//label[contains(text(),"Último")]/following-sibling::label//input', faker.person.lastName())
-        await this.page.fill('//body/div[6]/div[2]/div/div[2]/div[2]/div[1]/label/div/div[1]', generate())
-        await this.page.fill('//label[contains(text(),"Nacionalidade")]/following-sibling::label//input', payload.nationality)
-        await this.page.fill('//body/div[6]/div[2]/div/div[2]/div[2]/div[3]/label', faker.finance.account())
-        await this.page.fill('//body/div[6]/div[2]/div/div[2]/div[2]/div[4]/label[2]', faker.finance.account())
-        await this.page.fill('//label[contains(text(),"E-mail")]/following-sibling::form//input', faker.internet.email())
-        await this.page.fill('//label[contains(text(),"Data de Nasc")]/following-sibling::label//input', payload.birthdate )
-        await this.page.waitForSelector('//label[contains(text(),"Função")]/following-sibling::label//input', { state: 'visible' })
-        await this.page.fill(`//label[contains(text(),"Função")]/following-sibling::label//input`, payload.function)
+        await this.page.fill('.col-12 .q-field__native.q-placeholder >> nth=1', faker.person.fullName())
+        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=0', faker.person.firstName())
+        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=1', faker.person.lastName())
+        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=2', generate())
+        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=3', payload.nationality)
+        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=4', faker.finance.account())
+        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=5', faker.finance.account())
+        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=7', faker.internet.email())
+        await this.page.fill('.col-12 .q-field__native.q-placeholder >> nth=2', payload.birthdate )
+        await this.page.waitForSelector('.col-6 .q-field__input.q-placeholder.col >> nth=0', { state: 'visible' })
+        await this.page.fill(`.col-6 .q-field__input.q-placeholder.col >> nth=0`, payload.function)
         await this.page.click(`.q-item__section:has-text("${payload.function}")`)
     }
 
@@ -49,9 +49,9 @@ export class TravPage {
     }
 
     async fillInvite(payload) {
-        await this.page.fill('//label[contains(text(),"E-mail")]/following-sibling::form//input', faker.internet.email())
-        await this.page.waitForSelector('//label[contains(text(),"Função")]/following-sibling::label//input', { state: 'visible' })
-        await this.page.fill(`//label[contains(text(),"Função")]/following-sibling::label//input`, payload.function)
+        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=0', faker.internet.email())
+        await this.page.waitForSelector('.col-6 .q-field__input.q-placeholder.col >> nth=0', { state: 'visible' })
+        await this.page.fill(`.col-6 .q-field__input.q-placeholder.col >> nth=0`, payload.function)
         await this.page.click(`.q-item__section:has-text("${payload.function}")`)
 
     }
