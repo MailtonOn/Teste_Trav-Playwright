@@ -4,11 +4,13 @@ import { generate } from 'gerador-validador-cpf';
 import { faker } from '@faker-js/faker';
 
 export class TravPage {
+    
     readonly page: Page
 
     constructor(page: Page) {
         this.page = page
     }
+
 
     async goToEmployees() {
         await this.page.waitForLoadState('load')
@@ -19,19 +21,25 @@ export class TravPage {
     }
 
     async fill(payload) {
+        let colab12 = '.col-12'
+        let colab6 = '.col-6'
+        let fieldNative = '.q-field__native.q-placeholder'
+        let fieldInput = '.q-field__input.q-placeholder.col'
+        let itemSection = '.q-item__section'
+        
         await this.page.click('.q-btn__wrapper:has-text("Colaborador")')
-        await this.page.fill('.col-12 .q-field__native.q-placeholder >> nth=1', faker.person.fullName())
-        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=0', faker.person.firstName())
-        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=1', faker.person.lastName())
-        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=2', generate())
-        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=3', payload.nationality)
-        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=4', faker.finance.account())
-        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=5', faker.finance.account())
-        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=7', faker.internet.email())
-        await this.page.fill('.col-12 .q-field__native.q-placeholder >> nth=2', payload.birthdate )
-        await this.page.waitForSelector('.col-6 .q-field__input.q-placeholder.col >> nth=0', { state: 'visible' })
-        await this.page.fill(`.col-6 .q-field__input.q-placeholder.col >> nth=0`, payload.function)
-        await this.page.click(`.q-item__section:has-text("${payload.function}")`)
+        await this.page.fill(`${colab12} ${fieldNative} >> nth=1`, faker.person.fullName())
+        await this.page.fill(`${colab6} ${fieldNative} >> nth=0`, faker.person.firstName())
+        await this.page.fill(`${colab6} ${fieldNative} >> nth=1`, faker.person.lastName())
+        await this.page.fill(`${colab6} ${fieldNative} >> nth=2`, generate())
+        await this.page.fill(`${colab6} ${fieldNative} >> nth=3`, payload.nationality)
+        await this.page.fill(`${colab6} ${fieldNative} >> nth=4`, faker.finance.account())
+        await this.page.fill(`${colab6} ${fieldNative} >> nth=5`, faker.finance.account())
+        await this.page.fill(`${colab6} ${fieldNative} >> nth=7`, faker.internet.email())
+        await this.page.fill(`${colab12} ${fieldNative} >> nth=2`, payload.birthdate )
+        await this.page.waitForSelector(`${colab6} ${fieldInput} >> nth=0`, { state: 'visible' })
+        await this.page.fill(`${colab6} ${fieldInput} >> nth=0`, payload.function)
+        await this.page.click(`${itemSection}:has-text("${payload.function}")`)
     }
 
 
@@ -49,10 +57,14 @@ export class TravPage {
     }
 
     async fillInvite(payload) {
-        await this.page.fill('.col-6 .q-field__native.q-placeholder >> nth=0', faker.internet.email())
-        await this.page.waitForSelector('.col-6 .q-field__input.q-placeholder.col >> nth=0', { state: 'visible' })
-        await this.page.fill(`.col-6 .q-field__input.q-placeholder.col >> nth=0`, payload.function)
-        await this.page.click(`.q-item__section:has-text("${payload.function}")`)
+        let colab6 = '.col-6'
+        let fieldNative = '.q-field__native.q-placeholder'
+        let itemSection = '.q-item__section'
+
+        await this.page.fill(`${colab6} ${fieldNative} >> nth=0`, faker.internet.email())
+        await this.page.waitForSelector(`${colab6} ${fieldNative} >> nth=0`, { state: 'visible' })
+        await this.page.fill(`${colab6} ${fieldNative} >> nth=0`, payload.function)
+        await this.page.click(`${itemSection}:has-text("${payload.function}")`)
 
     }
 

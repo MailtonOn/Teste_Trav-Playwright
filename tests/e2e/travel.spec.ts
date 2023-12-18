@@ -17,7 +17,7 @@ test.beforeEach(async ({ page }) => {
   await loginPage.goToLogin()
 })
 
-test.describe('New Employee', () => {
+test.describe('Travel test', () => {
   const trips = travel.goTravel as GoTravelModel
   test('Deve criar um novo colaborador', async () => {
     const Employee = travel.new as unknown as EmployeeModel
@@ -35,7 +35,7 @@ test.describe('New Employee', () => {
     await travPage.fillInvite(Employee)
     await travPage.sendInvite()
   })
-  test.only('Deve fazer uma reserva de aereo ida e volta', async () => {
+  test('Deve fazer uma reserva de aereo ida e volta', async () => {
     const trip = travel.aereo as TravelModel
     await homePage.goTo(trips)
     await travPage.fillBookFlight(trip)
