@@ -27,8 +27,10 @@ export class TravPage {
         let fieldInput = '.q-field__input.q-placeholder.col'
         let itemSection = '.q-item__section'
         
+        const nth = 'nth'
+        
         await this.page.click('.q-btn__wrapper:has-text("Colaborador")')
-        await this.page.fill(`${colab12} ${fieldNative} >> nth=1`, faker.person.fullName())
+        await this.page.fill(`${colab12} ${fieldNative} >> ${nth}=1`, faker.person.fullName())
         await this.page.fill(`${colab6} ${fieldNative} >> nth=0`, faker.person.firstName())
         await this.page.fill(`${colab6} ${fieldNative} >> nth=1`, faker.person.lastName())
         await this.page.fill(`${colab6} ${fieldNative} >> nth=2`, generate())
@@ -73,20 +75,32 @@ export class TravPage {
         await expect(this.page.locator('#swal2-content')).toHaveText('Aguarde enquanto processamos...')
         await expect(this.page.locator('#swal2-content')).toHaveText('Usuário convidado')
     }
+
+    async fillPassenger (payload) {
+        let fieldControl = '.q-field__control'
+        let itemSection = '.q-item__section'
+
+        const nth = 'nth'
+
+        await this.page.waitForSelector(`${fieldControl} >> ${nth}=0`, { state: 'visible' })
+        await this.page.fill(`${fieldControl} >> ${nth}=0`, payload.FistName)
+        await this.page.click(`${itemSection}:has-text("${payload.FistName}")`)
+
+    }
     async fillBookFlight(payload) {
         //await this.page.locator('a[href$="flight"]').click()
 
         for (const char of payload.partida) {
-            await this.page.fill('.q-field__control >> nth=0',
-                await this.page.inputValue('.q-field__control >> nth=0') + char)
+            await this.page.fill('.q-field__control >> nth=1',
+                await this.page.inputValue('.q-field__control >> nth=1') + char)
             await this.page.waitForTimeout(200)
         }
         await this.page.waitForSelector(`.q-item__section:has-text("${payload.code1}")`)
         await this.page.click(`.q-item__section:has-text("${payload.code1}")`)
 
         for (const char of payload.destino) {
-            await this.page.fill('.q-field__control >> nth=1',
-                await this.page.inputValue('.q-field__control >> nth=1') + char)
+            await this.page.fill('.q-field__control >> nth=2',
+                await this.page.inputValue('.q-field__control >> nth=2') + char)
             await this.page.waitForTimeout(250)
         }
         await this.page.waitForSelector(`.q-item__section:has-text("${payload.code2}")`)

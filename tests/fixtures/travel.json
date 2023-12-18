@@ -16,13 +16,14 @@
     "dataIdValue": "1",
     "button": "Reservar",
     "title": "Reservar Aéreo"
-},
-"aereo": {
+  },
+  "aereo": {
+    "select": "Passageiros",
     "partida": "Belo Horizonte",
     "code1": "BHZ",
     "destino": "Viracopos",
     "code2": "VCP",
     "goDay": 98,
     "backDay": 115
-}
+  }
 }
