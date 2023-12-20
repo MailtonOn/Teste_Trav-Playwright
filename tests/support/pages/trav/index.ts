@@ -124,12 +124,12 @@ export class TravPage {
         await this.selectDay(calendarIndex, day)
     }
 
-    async selectDay(calendarIndex, day) {
+    async selectDay(calendarIndex: number, day: number) {
         await this.page.waitForSelector(`#calendar${calendarIndex} .q-btn__content:has-text("${day}")`, { state: 'visible' })
         await this.page.click(`#calendar${calendarIndex} .q-btn__content:has-text("${day}")`)
     }
 
-    async navigateToCorrectMonth(month) {
+    async navigateToCorrectMonth(month: string) {
         const expectedMonth = month.charAt(0).toUpperCase() + month.slice(1)
 
         let calendarIndex = 1
@@ -154,6 +154,9 @@ export class TravPage {
                 calendarIndex++
             }
         }
+    }
+    async searchTicket() {
+        await this.page.getByRole('button', { name: "Buscar Passagem", exact: true }).nth(0).click()
     }
 }
 

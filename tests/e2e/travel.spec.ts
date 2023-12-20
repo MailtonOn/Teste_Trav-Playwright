@@ -41,5 +41,6 @@ test.describe('Travel test', () => {
     await homePage.goTo(trips)
     await travPage.fillPassenger(passe)
     await travPage.fillBookFlight(trip)
+    await travPage.searchTicket()
   } )
 })
