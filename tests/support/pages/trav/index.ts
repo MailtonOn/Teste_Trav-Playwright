@@ -31,15 +31,15 @@ export class TravPage {
         
         await this.page.click('.q-btn__wrapper:has-text("Colaborador")')
         await this.page.fill(`${colab12} ${fieldNative} >> ${nth}=1`, faker.person.fullName())
-        await this.page.fill(`${colab6} ${fieldNative} >> nth=0`, faker.person.firstName())
-        await this.page.fill(`${colab6} ${fieldNative} >> nth=1`, faker.person.lastName())
-        await this.page.fill(`${colab6} ${fieldNative} >> nth=2`, generate())
-        await this.page.fill(`${colab6} ${fieldNative} >> nth=3`, payload.nationality)
-        await this.page.fill(`${colab6} ${fieldNative} >> nth=4`, faker.finance.account())
-        await this.page.fill(`${colab6} ${fieldNative} >> nth=5`, faker.finance.account())
-        await this.page.fill(`${colab6} ${fieldNative} >> nth=7`, faker.internet.email())
-        await this.page.fill(`${colab12} ${fieldNative} >> nth=2`, payload.birthdate )
-        await this.page.waitForSelector(`${colab6} ${fieldInput} >> nth=0`, { state: 'visible' })
+        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=0`, faker.person.firstName())
+        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=1`, faker.person.lastName())
+        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=2`, generate())
+        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=3`, payload.nationality)
+        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=4`, faker.finance.account())
+        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=5`, faker.finance.account())
+        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=7`, faker.internet.email())
+        await this.page.fill(`${colab12} ${fieldNative} >> ${nth}=2`, payload.birthdate )
+        await this.page.waitForSelector(`${colab6} ${fieldInput} >> ${nth}=0`, { state: 'visible' })
         await this.page.fill(`${colab6} ${fieldInput} >> nth=0`, payload.function)
         await this.page.click(`${itemSection}:has-text("${payload.function}")`)
     }
@@ -62,10 +62,13 @@ export class TravPage {
         let colab6 = '.col-6'
         let fieldNative = '.q-field__native.q-placeholder'
         let itemSection = '.q-item__section'
+        let fieldInput = '.q-field__input.q-placeholder.col'
 
-        await this.page.fill(`${colab6} ${fieldNative} >> nth=0`, faker.internet.email())
-        await this.page.waitForSelector(`${colab6} ${fieldNative} >> nth=0`, { state: 'visible' })
-        await this.page.fill(`${colab6} ${fieldNative} >> nth=0`, payload.function)
+        const nth = 'nth'
+
+        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=0`, faker.internet.email())
+        await this.page.waitForSelector(`${fieldInput} >> ${nth}=0`, { state: 'visible' })
+        await this.page.fill(`${fieldInput} >> ${nth}=0`, payload.function)
         await this.page.click(`${itemSection}:has-text("${payload.function}")`)
 
     }
