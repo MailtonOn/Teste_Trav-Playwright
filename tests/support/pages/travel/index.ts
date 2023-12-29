@@ -20,28 +20,69 @@ export class TravPage {
         await this.page.click('#nav-sub-item:has-text("Colaboradores")')
     }
 
-    async fill(payload) {
-        let colab12 = '.col-12'
-        let colab6 = '.col-6'
-        let fieldNative = '.q-field__native.q-placeholder'
-        let fieldInput = '.q-field__input.q-placeholder.col'
-        let itemSection = '.q-item__section'
-        
-        const nth = 'nth'
-        
+    async fillEmployees(payload) {
         await this.page.click('.q-btn__wrapper:has-text("Colaborador")')
-        await this.page.fill(`${colab12} ${fieldNative} >> ${nth}=1`, faker.person.fullName())
-        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=0`, faker.person.firstName())
-        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=1`, faker.person.lastName())
-        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=2`, generate())
-        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=3`, payload.nationality)
-        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=4`, faker.finance.account())
-        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=5`, faker.finance.account())
-        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=7`, faker.internet.email())
-        await this.page.fill(`${colab12} ${fieldNative} >> ${nth}=2`, payload.birthdate )
-        await this.page.waitForSelector(`${colab6} ${fieldInput} >> ${nth}=0`, { state: 'visible' })
-        await this.page.fill(`${colab6} ${fieldInput} >> nth=0`, payload.function)
-        await this.page.click(`${itemSection}:has-text("${payload.function}")`)
+        // let colab12 = '.col-12'
+        // let colab6 = '.col-6'
+        // let fieldNative = '.q-field__native.q-placeholder'
+        // let fieldInput = '.q-field__input.q-placeholder.col'
+
+        const selectors = [
+            '.col-12 .q-field__native.q-placeholder',
+            '.col-6 .q-field__native.q-placeholder',
+            '.col-6 .q-field__native.q-placeholder',
+            '.col-6 .q-field__native.q-placeholder',
+            '.col-6 .q-field__native.q-placeholder',
+            '.col-6 .q-field__native.q-placeholder',
+            '.col-6 .q-field__native.q-placeholder',
+            '.col-6 .q-field__native.q-placeholder',
+            '.col-12 .q-field__native.q-placeholder',
+            '.col-6 .q-field__input.q-placeholder.col'
+        ]
+
+        const fieldValues = [
+            faker.person.fullName(),
+            faker.person.firstName(),
+            faker.person.lastName(),
+            generate(),
+            payload.nationality,
+            faker.finance.accountNumber(),
+            faker.finance.accountNumber(),
+            faker.internet.email(),
+            payload.birthdate,
+            payload.function
+        ]
+
+        const nthIndices = [1, 0, 1, 2, 3, 4, 5, 7, 2, 0]
+
+        for (let i = 0; i < selectors.length; i++) {
+            const selector = selectors[i];
+            // const fieldValue = fieldValues[i];
+            // const nthIndex = nthIndices[i];
+    
+            await this.page.fill(`${selector} >> nth=${nthIndices[i]}`, fieldValues[i]);
+            
+        }
+
+    //     const nth = 'nth'
+                
+    //     await this.page.fill(`${colab12} ${fieldNative} >> ${nth}=1`, faker.person.fullName())
+    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=0`, faker.person.firstName())
+    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=1`, faker.person.lastName())
+    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=2`, generate())
+    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=3`, payload.nationality)
+    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=4`, faker.finance.accountNumber())
+    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=5`, faker.finance.accountNumber())
+    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=7`, faker.internet.email())
+    //     await this.page.fill(`${colab12} ${fieldNative} >> ${nth}=2`, payload.birthdate )
+    //     await this.page.waitForSelector(`${colab6} ${fieldInput} >> ${nth}=0`, { state: 'visible' })
+    //     await this.page.fill(`${colab6} ${fieldInput} >> nth=0`, payload.function)
+    //     await this.page.click(`.q-item__section:has-text("${payload.function}")`)
+    await this.page.waitForSelector(`${selectors[9]} >> nth=0`, { state: 'visible' });
+    await this.page.fill(`${selectors[9]} >> nth=0`, payload.function);
+    await this.page.click(`.q-item__section:has-text("${payload.function}")`);
+
+
     }
 
 
@@ -59,17 +100,23 @@ export class TravPage {
     }
 
     async fillInvite(payload) {
-        let colab6 = '.col-6'
-        let fieldNative = '.q-field__native.q-placeholder'
-        let itemSection = '.q-item__section'
-        let fieldInput = '.q-field__input.q-placeholder.col'
+        // let colab6 = '.col-6'
+        // let fieldNative = '.q-field__native.q-placeholder'
+        // let itemSection = '.q-item__section'
+        // let fieldInput = '.q-field__input.q-placeholder.col'
+        const selectors = ['.col-6 .q-field__native.q-placeholder', '.q-field__input.q-placeholder.col'];
+        const fieldValues = [faker.internet.email(), payload.function];
+        for (let i = 0; i < selectors.length; i++) {
+            await this.page.fill(`${selectors[i]} >> nth=0`, fieldValues[i]);
+        }
 
-        const nth = 'nth'
+        // const nth = 'nth'
 
-        await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=0`, faker.internet.email())
-        await this.page.waitForSelector(`${fieldInput} >> ${nth}=0`, { state: 'visible' })
-        await this.page.fill(`${fieldInput} >> ${nth}=0`, payload.function)
-        await this.page.click(`${itemSection}:has-text("${payload.function}")`)
+        // await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=0`, faker.internet.email())
+        // await this.page.waitForSelector(`${fieldInput} >> ${nth}=0`, { state: 'visible' })
+        // await this.page.fill(`${fieldInput} >> ${nth}=0`, payload.function)
+        // await this.page.click(`${itemSection}:has-text("${payload.function}")`)
+        await this.page.click(`.q-item__section:has-text("${payload.function}")`)
 
     }
 
