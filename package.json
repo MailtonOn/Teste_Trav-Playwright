@@ -7,19 +7,18 @@
     "@faker-js/faker": "^8.3.1",
     "@playwright/test": "^1.40.0",
     "@types/node": "^20.9.0",
-    "playwright": "^1.40.0",
-    "date-fns": "^3.0.0-rc.2"
+    "date-fns": "^3.0.0-rc.2",
+    "playwright": "^1.40.0"
   },
   "scripts": {
     "start": "playwright test",
     "debug": "playwright test --debug",
     "travel": "playwright test travel --ui",
     "expense": "playwright test expense --ui"
-
-    
   },
   "dependencies": {
     "dotenv": "^16.3.1",
-    "gerador-validador-cpf": "^5.0.2"
+    "gerador-validador-cpf": "^5.0.2",
+    "yarn": "^1.22.21"
   }
 }

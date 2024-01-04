@@ -27,7 +27,7 @@ test.describe('Travel test', () => {
     await travPage.saveEmployee()
     await travPage.successMessage()
   })
-  test.only('Deve convidar um colaborador', async () => {
+  test('Deve convidar um colaborador', async () => {
     const Employee = travel.toInvite as unknown as EmployeeModel
 
     await travPage.goToEmployees()
@@ -35,7 +35,7 @@ test.describe('Travel test', () => {
     await travPage.fillInvite(Employee)
     await travPage.sendInvite()
   })
-  test('Deve fazer uma reserva de aereo ida e volta', async () => {
+  test.only('Deve fazer uma reserva de aereo ida e volta', async () => {
     const trip = travel.aereo as TravelModel
     const passe = travel.new as unknown as TravelModel
     await homePage.goTo(trips)
