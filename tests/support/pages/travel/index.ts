@@ -28,16 +28,16 @@ export class TravPage {
         // let fieldInput = '.q-field__input.q-placeholder.col'
 
         const selectors = [
-            '.col-12 .q-field__native.q-placeholder',
-            '.col-6 .q-field__native.q-placeholder',
-            '.col-6 .q-field__native.q-placeholder',
-            '.col-6 .q-field__native.q-placeholder',
-            '.col-6 .q-field__native.q-placeholder',
-            '.col-6 .q-field__native.q-placeholder',
-            '.col-6 .q-field__native.q-placeholder',
-            '.col-6 .q-field__native.q-placeholder',
-            '.col-12 .q-field__native.q-placeholder',
-            '.col-6 .q-field__input.q-placeholder.col'
+            '.q-field__native.q-placeholder',
+            '.q-field__native.q-placeholder',
+            '.q-field__native.q-placeholder',
+            '.q-field__native.q-placeholder',
+            '.q-field__native.q-placeholder',
+            '.q-field__native.q-placeholder',
+            '.q-field__native.q-placeholder',
+            '.q-field__native.q-placeholder',
+            '.q-field__native.q-placeholder',
+            '.q-field__input.q-placeholder.col'
         ]
 
         const fieldValues = [
@@ -104,7 +104,7 @@ export class TravPage {
         // let fieldNative = '.q-field__native.q-placeholder'
         // let itemSection = '.q-item__section'
         // let fieldInput = '.q-field__input.q-placeholder.col'
-        const selectors = ['.col-6 .q-field__native.q-placeholder', '.q-field__input.q-placeholder.col'];
+        const selectors = ['.q-field__native.q-placeholder', '.q-field__input.q-placeholder.col'];
         const fieldValues = [faker.internet.email(), payload.function];
         for (let i = 0; i < selectors.length; i++) {
             await this.page.fill(`${selectors[i]} >> nth=0`, fieldValues[i]);
@@ -141,16 +141,16 @@ export class TravPage {
         //await this.page.locator('a[href$="flight"]').click()
 
         for (const char of payload.partida) {
-            await this.page.fill('.q-field__control >> nth=1',
-                await this.page.inputValue('.q-field__control >> nth=1') + char)
+            await this.page.fill('.q-field__control >> nth=0',
+                await this.page.inputValue('.q-field__control >> nth=0') + char)
             await this.page.waitForTimeout(200)
         }
         await this.page.waitForSelector(`.q-item__section:has-text("${payload.code1}")`)
         await this.page.click(`.q-item__section:has-text("${payload.code1}")`)
 
         for (const char of payload.destino) {
-            await this.page.fill('.q-field__control >> nth=2',
-                await this.page.inputValue('.q-field__control >> nth=2') + char)
+            await this.page.fill('.q-field__control >> nth=1',
+                await this.page.inputValue('.q-field__control >> nth=1') + char)
             await this.page.waitForTimeout(250)
         }
         await this.page.waitForSelector(`.q-item__section:has-text("${payload.code2}")`)
@@ -202,8 +202,25 @@ export class TravPage {
             }
         }
     }
+
+
     async searchTicket() {
         await this.page.getByRole('button', { name: "Buscar Passagem", exact: true }).nth(0).click()
+
+        const nth = 'nth'
+
+        await this.page.click(`.flight-desktop-info >> ${nth}=0`)
+        await this.page.click(`.flight-fare-button >> ${nth}=0`,{ delay: 3000 })
+        await this.page.click(`.flight-desktop-info >> ${nth}=0`, { delay: 3000 })
+        await this.page.click(`.flight-fare-button >> ${nth}=0`, { delay: 10000 })
+        await this.page.getByRole('button', { name: "Prosseguir", exact: true }).nth(0).click()
+
+
+    }
+    async successTicket() {
+        await expect(this.page.locator('#swal2-content')).toHaveText('Estamos validando as tarifas')
+        await expect(this.page.locator('#swal2-content')).toHaveText('Usuário cadastrado')
+
     }
 }
 
