@@ -39,7 +39,7 @@ test.describe('Travel test', () => {
     const trip = travel.aereo as TravelModel
     const passe = travel.new as unknown as TravelModel
     await homePage.goTo(trips)
-    await travPage.fillPassenger(passe)
+    // await travPage.fillPassenger(passe)
     await travPage.fillBookFlight(trip)
     await travPage.searchTicket()
   } )
