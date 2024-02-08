@@ -28,16 +28,15 @@ export class TravPage {
         // let fieldInput = '.q-field__input.q-placeholder.col'
 
         const selectors = [
-            '.q-field__native.q-placeholder',
-            '.q-field__native.q-placeholder',
-            '.q-field__native.q-placeholder',
-            '.q-field__native.q-placeholder',
-            '.q-field__native.q-placeholder',
-            '.q-field__native.q-placeholder',
-            '.q-field__native.q-placeholder',
-            '.q-field__native.q-placeholder',
-            '.q-field__native.q-placeholder',
-            '.q-field__input.q-placeholder.col'
+            '.q-placeholder',
+            '.q-placeholder',
+            '.q-placeholder',
+            '.q-placeholder',
+            '.q-placeholder',
+            '.q-placeholder',
+            '.q-placeholder',
+            '.q-placeholder',
+            '.q-placeholder'
         ]
 
         const fieldValues = [
@@ -47,13 +46,12 @@ export class TravPage {
             generate(),
             payload.nationality,
             faker.finance.accountNumber(),
-            faker.finance.accountNumber(),
             faker.internet.email(),
             payload.birthdate,
             payload.function
         ]
 
-        const nthIndices = [1, 0, 1, 2, 3, 4, 5, 7, 2, 0]
+        const nthIndices = [ 1, 2, 3, 4, 5, 7, 9, 10, 13 ]
 
         for (let i = 0; i < selectors.length; i++) {
             const selector = selectors[i];
@@ -78,8 +76,8 @@ export class TravPage {
     //     await this.page.waitForSelector(`${colab6} ${fieldInput} >> ${nth}=0`, { state: 'visible' })
     //     await this.page.fill(`${colab6} ${fieldInput} >> nth=0`, payload.function)
     //     await this.page.click(`.q-item__section:has-text("${payload.function}")`)
-    await this.page.waitForSelector(`${selectors[9]} >> nth=0`, { state: 'visible' });
-    await this.page.fill(`${selectors[9]} >> nth=0`, payload.function);
+    await this.page.waitForSelector(`${selectors[10]} >> nth=0`, { state: 'visible' });
+    await this.page.fill(`${selectors[10]} >> nth=0`, payload.function);
     await this.page.click(`.q-item__section:has-text("${payload.function}")`);
 
 
@@ -100,22 +98,14 @@ export class TravPage {
     }
 
     async fillInvite(payload) {
-        // let colab6 = '.col-6'
-        // let fieldNative = '.q-field__native.q-placeholder'
-        // let itemSection = '.q-item__section'
-        // let fieldInput = '.q-field__input.q-placeholder.col'
+      
         const selectors = ['.q-field__native.q-placeholder', '.q-field__input.q-placeholder.col'];
         const fieldValues = [faker.internet.email(), payload.function];
         for (let i = 0; i < selectors.length; i++) {
             await this.page.fill(`${selectors[i]} >> nth=0`, fieldValues[i]);
         }
 
-        // const nth = 'nth'
-
-        // await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=0`, faker.internet.email())
-        // await this.page.waitForSelector(`${fieldInput} >> ${nth}=0`, { state: 'visible' })
-        // await this.page.fill(`${fieldInput} >> ${nth}=0`, payload.function)
-        // await this.page.click(`${itemSection}:has-text("${payload.function}")`)
+    
         await this.page.click(`.q-item__section:has-text("${payload.function}")`)
 
     }
@@ -138,7 +128,6 @@ export class TravPage {
 
     }
     async fillBookFlight(payload) {
-        //await this.page.locator('a[href$="flight"]').click()
 
         for (const char of payload.partida) {
             await this.page.fill('.q-field__control >> nth=0',
@@ -172,8 +161,9 @@ export class TravPage {
     }
 
     async selectDay(calendarIndex: number, day: number) {
-        await this.page.waitForSelector(`#calendar${calendarIndex} .q-btn__content:has-text("${day}")`, { state: 'visible' })
-        await this.page.click(`#calendar${calendarIndex} .q-btn__content:has-text("${day}")`)
+        const selector = `#calendar${calendarIndex} .q-btn__content:has(.block:text-is("${day}"))`
+        await this.page.waitForSelector(selector, { state: 'visible' })
+        await this.page.click(selector)
     }
 
     async navigateToCorrectMonth(month: string) {
@@ -217,9 +207,43 @@ export class TravPage {
 
 
     }
+
+    async filltraveler(payload){
+        const selectors = [
+            '.q-validation-component',
+            '.q-validation-component',
+            '.q-validation-component',
+            '.q-validation-component',
+            '.q-validation-component',
+            '.q-validation-component',
+            '.q-validation-component'
+
+        ]
+
+        const fieldValues = [
+            faker.person.fullName(),
+            faker.person.firstName(),
+            faker.internet.email(),
+            generate(),            
+            payload.birthdate,
+            faker.phone.number(),
+            faker.finance.accountNumber()
+
+        ]
+        const nthIndices = [ 0, 1, 2, 3, 4, 5, 8 ]
+
+        for (let i = 0; i < selectors.length; i++) {
+            const selector = selectors[i];
+         
+    
+            await this.page.fill(`${selector} >> nth=${nthIndices[i]}`, fieldValues[i]);
+        }
+    }
+
+
     async successTicket() {
-        await expect(this.page.locator('#swal2-content')).toHaveText('Estamos validando as tarifas')
-        await expect(this.page.locator('#swal2-content')).toHaveText('Usuário cadastrado')
+        await expect(this.page.locator('#swal2-content')).toHaveText('')
+        await expect(this.page.locator('#swal2-content')).toHaveText('')
 
     }
 }

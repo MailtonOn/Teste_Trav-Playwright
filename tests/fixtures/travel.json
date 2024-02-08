@@ -22,8 +22,8 @@
     "select": "Passageiros",
     "partida": "Belo Horizonte",
     "code1": "BHZ",
-    "destino": "Viracopos",
-    "code2": "VCP",
+    "destino": "Rio de janeiro",
+    "code2": "TODOS",
     "goDay": 98,
     "backDay": 115
   }

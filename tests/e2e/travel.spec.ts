@@ -37,7 +37,7 @@ test.describe('Travel test', () => {
   })
   test.only('Deve fazer uma reserva de aereo ida e volta', async () => {
     const trip = travel.aereo as TravelModel
-    const passe = travel.new as unknown as TravelModel
+    // const passe = travel.new as unknown as TravelModel
     await homePage.goTo(trips)
     // await travPage.fillPassenger(passe)
     await travPage.fillBookFlight(trip)
