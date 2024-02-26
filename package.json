@@ -8,7 +8,7 @@
     "@playwright/test": "^1.41.2",
     "@types/node": "^20.9.0",
     "date-fns": "^3.0.0-rc.2",
-    "playwright": "^1.40.0"
+    "playwright": "^1.41.2"
   },
   "scripts": {
     "start": "playwright test",
