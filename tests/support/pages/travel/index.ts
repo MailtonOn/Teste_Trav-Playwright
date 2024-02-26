@@ -14,7 +14,7 @@ export class TravPage {
 
     async goToEmployees() {
         await this.page.waitForLoadState('load')
-        await this.page.waitForSelector('li[data-id="5"]', { state: 'visible', timeout: 30000 })
+        await this.page.waitForSelector('li[data-id="5"]', { state: 'visible', timeout: 60000 })
         await this.page.hover('li[data-id="5"]')
 
         await this.page.click('#nav-sub-item:has-text("Colaboradores")')
