@@ -36,7 +36,7 @@ export class TravPage {
             '.q-placeholder',
             '.q-placeholder',
             '.q-placeholder',
-            '.q-placeholder'
+            '.q-placeholder.col'
         ]
 
         const fieldValues = [
@@ -51,7 +51,7 @@ export class TravPage {
             payload.function
         ]
 
-        const nthIndices = [ 1, 2, 3, 4, 5, 7, 9, 10, 13 ]
+        const nthIndices = [ 1, 2, 3, 4, 5, 7, 9, 10, 1 ]
 
         for (let i = 0; i < selectors.length; i++) {
             const selector = selectors[i];
@@ -76,8 +76,8 @@ export class TravPage {
     //     await this.page.waitForSelector(`${colab6} ${fieldInput} >> ${nth}=0`, { state: 'visible' })
     //     await this.page.fill(`${colab6} ${fieldInput} >> nth=0`, payload.function)
     //     await this.page.click(`.q-item__section:has-text("${payload.function}")`)
-    await this.page.waitForSelector(`${selectors[10]} >> nth=0`, { state: 'visible' });
-    await this.page.fill(`${selectors[10]} >> nth=0`, payload.function);
+    await this.page.waitForSelector(`${selectors[1]} >> nth=0`, { state: 'visible' });
+    await this.page.fill(`${selectors[1]} >> nth=0`, payload.function);
     await this.page.click(`.q-item__section:has-text("${payload.function}")`);
 
 
