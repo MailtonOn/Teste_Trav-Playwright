@@ -4,7 +4,7 @@ import { generate } from 'gerador-validador-cpf';
 import { faker } from '@faker-js/faker';
 
 export class TravPage {
-    
+
     readonly page: Page
 
     constructor(page: Page) {
@@ -51,34 +51,31 @@ export class TravPage {
             payload.function
         ]
 
-        const nthIndices = [ 1, 2, 3, 4, 5, 7, 9, 10, 1 ]
+        const nthIndices = [1, 2, 3, 4, 5, 7, 9, 10, 1]
 
         for (let i = 0; i < selectors.length; i++) {
-            const selector = selectors[i];
-            // const fieldValue = fieldValues[i];
-            // const nthIndex = nthIndices[i];
-    
+            const selector = selectors[i];            
+
             await this.page.fill(`${selector} >> nth=${nthIndices[i]}`, fieldValues[i]);
-            
+
         }
 
-    //     const nth = 'nth'
-                
-    //     await this.page.fill(`${colab12} ${fieldNative} >> ${nth}=1`, faker.person.fullName())
-    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=0`, faker.person.firstName())
-    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=1`, faker.person.lastName())
-    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=2`, generate())
-    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=3`, payload.nationality)
-    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=4`, faker.finance.accountNumber())
-    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=5`, faker.finance.accountNumber())
-    //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=7`, faker.internet.email())
-    //     await this.page.fill(`${colab12} ${fieldNative} >> ${nth}=2`, payload.birthdate )
-    //     await this.page.waitForSelector(`${colab6} ${fieldInput} >> ${nth}=0`, { state: 'visible' })
-    //     await this.page.fill(`${colab6} ${fieldInput} >> nth=0`, payload.function)
-    //     await this.page.click(`.q-item__section:has-text("${payload.function}")`)
-    await this.page.waitForSelector(`${selectors[1]} >> nth=0`, { state: 'visible' });
-    await this.page.fill(`${selectors[1]} >> nth=0`, payload.function, { timeout: 60000 });
-    await this.page.click(`.q-item__section:has-text("${payload.function}")`);
+        //     const nth = 'nth'
+
+        //     await this.page.fill(`${colab12} ${fieldNative} >> ${nth}=1`, faker.person.fullName())
+        //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=0`, faker.person.firstName())
+        //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=1`, faker.person.lastName())
+        //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=2`, generate())
+        //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=3`, payload.nationality)
+        //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=4`, faker.finance.accountNumber())
+        //     await this.page.fill(`${colab6} ${fieldNative} >> ${nth}=7`, faker.internet.email())
+        //     await this.page.fill(`${colab12} ${fieldNative} >> ${nth}=2`, payload.birthdate )
+        //     await this.page.waitForSelector(`${colab6} ${fieldInput} >> ${nth}=0`, { state: 'visible' })
+        //     await this.page.fill(`${colab6} ${fieldInput} >> nth=0`, payload.function)
+        //     await this.page.click(`.q-item__section:has-text("${payload.function}")`)
+        // await this.page.waitForSelector(`${selectors[1]} >> nth=0`, { state: 'visible' });
+        // await this.page.fill(`${selectors[1]} >> nth=0`, payload.function, { timeout: 60000 });
+        await this.page.click(`.q-item__section:has-text("${payload.function}")`);
 
 
     }
@@ -98,14 +95,15 @@ export class TravPage {
     }
 
     async fillInvite(payload) {
-      
-        const selectors = ['.q-field__native.q-placeholder', '.q-field__input.q-placeholder.col'];
+
+        const selectors = ['.q-placeholder', '.q-placeholder.col'];
         const fieldValues = [faker.internet.email(), payload.function];
+        const nthIndices = [1, 0]
         for (let i = 0; i < selectors.length; i++) {
-            await this.page.fill(`${selectors[i]} >> nth=0`, fieldValues[i]);
+            const selector = selectors[i];
+            await this.page.fill(`${selector} >> nth=${nthIndices[i]}`, fieldValues[i]);
         }
 
-    
         await this.page.click(`.q-item__section:has-text("${payload.function}")`)
 
     }
@@ -116,7 +114,7 @@ export class TravPage {
         await expect(this.page.locator('#swal2-content')).toHaveText('Usuário convidado')
     }
 
-    async fillPassenger (payload) {
+    async fillPassenger(payload) {
         let fieldControl = '.q-field__control'
         let itemSection = '.q-item__section'
 
@@ -152,7 +150,7 @@ export class TravPage {
         await this.fillDate(payload.backDay)
     }
 
-    async fillDate (payload) {
+    async fillDate(payload) {
         const { day, month } = dateComponents(payload)
         const calendarIndex = await this.navigateToCorrectMonth(month)
 
@@ -170,10 +168,10 @@ export class TravPage {
         const expectedMonth = month.charAt(0).toUpperCase() + month.slice(1)
 
         let calendarIndex = 1
-        
+
         while (true) {
             await this.page.waitForSelector(`#calendar${calendarIndex} .q-date__header-subtitle`, { state: 'attached' })
-            
+
             let monthText = await this.page.textContent(`#calendar${calendarIndex} .q-date__header-subtitle`)
 
             if (monthText) {
@@ -196,11 +194,12 @@ export class TravPage {
 
     async searchTicket() {
         await this.page.getByRole('button', { name: "Buscar Passagem", exact: true }).nth(0).click()
+        await expect(this.page.locator('#swal2-content')).toHaveText('Na Onfly, todo cuidado é pouco para garantir as melhores condições e passagens para você!', { timeout: 60000 })
 
         const nth = 'nth'
 
         await this.page.click(`.flight-desktop-info >> ${nth}=0`)
-        await this.page.click(`.flight-fare-button >> ${nth}=0`,{ delay: 3000 })
+        await this.page.click(`.flight-fare-button >> ${nth}=0`, { delay: 3000 })
         await this.page.click(`.flight-desktop-info >> ${nth}=0`, { delay: 3000 })
         await this.page.click(`.flight-fare-button >> ${nth}=0`, { delay: 10000 })
         await this.page.getByRole('button', { name: "Prosseguir", exact: true }).nth(0).click()
@@ -208,7 +207,7 @@ export class TravPage {
 
     }
 
-    async filltraveler(payload){
+    async filltraveler(payload) {
         const selectors = [
             '.q-validation-component',
             '.q-validation-component',
@@ -224,18 +223,18 @@ export class TravPage {
             faker.person.fullName(),
             faker.person.firstName(),
             faker.internet.email(),
-            generate(),            
+            generate(),
             payload.birthdate,
             faker.phone.number(),
             faker.finance.accountNumber()
 
         ]
-        const nthIndices = [ 0, 1, 2, 3, 4, 5, 8 ]
+        const nthIndices = [0, 1, 2, 3, 4, 5, 8]
 
         for (let i = 0; i < selectors.length; i++) {
             const selector = selectors[i];
-         
-    
+
+
             await this.page.fill(`${selector} >> nth=${nthIndices[i]}`, fieldValues[i]);
         }
     }

@@ -19,7 +19,8 @@ jobs:
     - name: Install Playwright Browsers
       run: yarn playwright install --with-deps
     - name: Run Playwright tests
-      run: yarn playwright test
+      run: LOGIN=${{ secrets.LOGIN }}
+           yarn playwright test "$LOGIN"
     - uses: actions/upload-artifact@v3
       if: always()
       with:
