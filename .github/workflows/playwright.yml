@@ -20,7 +20,7 @@ jobs:
       run: yarn playwright install --with-deps
     - name: Run Playwright tests
       run: LOGIN=${{ secrets.LOGIN }}
-           yarn playwright test "$LOGIN"
+           yarn playwright test
     - uses: actions/upload-artifact@v3
       if: always()
       with:
