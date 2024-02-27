@@ -77,7 +77,7 @@ export class TravPage {
     //     await this.page.fill(`${colab6} ${fieldInput} >> nth=0`, payload.function)
     //     await this.page.click(`.q-item__section:has-text("${payload.function}")`)
     await this.page.waitForSelector(`${selectors[1]} >> nth=0`, { state: 'visible' });
-    await this.page.fill(`${selectors[1]} >> nth=0`, payload.function);
+    await this.page.fill(`${selectors[1]} >> nth=0`, payload.function, { timeout: 60000 });
     await this.page.click(`.q-item__section:has-text("${payload.function}")`);
 
 

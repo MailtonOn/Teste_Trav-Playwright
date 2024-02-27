@@ -42,5 +42,5 @@ test.describe('Travel test', () => {
     // await travPage.fillPassenger(passe)
     await travPage.fillBookFlight(trip)
     await travPage.searchTicket()
-  } )
+  })
 })
