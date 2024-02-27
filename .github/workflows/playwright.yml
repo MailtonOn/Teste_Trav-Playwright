@@ -20,9 +20,12 @@ jobs:
       run: yarn playwright install --with-deps
     - name: Run Secret
       env:
-        LOGIN: ${{ secrets.LOGIN }}
+        EMAIL: ${{ secrets.EMAIL}}
+        PASSWORD: ${{ secrets.PASSWORD}}
       run: |
-          echo "This is a secret value: $LOGIN"
+           echo "EMAIL: ${{ secrets.EMAIL }}"
+           echo "PASSWORD: ${{ secrets.PASSWORD }}"
+          
     - name: Run Playwright tests
       run:  yarn playwright test
     - uses: actions/upload-artifact@v3
