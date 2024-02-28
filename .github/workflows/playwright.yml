@@ -9,6 +9,9 @@ jobs:
   travel-test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      EMAIL: ${{ secrets.EMAIL }}
+      PASSWORD: ${{ secrets.PASSWORD }}
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
@@ -18,13 +21,13 @@ jobs:
       run: npm install -g yarn && yarn
     - name: Install Playwright Browsers
       run: yarn playwright install --with-deps
-    - name: Run Secret
-      env:
-        EMAIL: ${{ secrets.EMAIL}}
-        PASSWORD: ${{ secrets.PASSWORD}}
-      run: |
-           echo "EMAIL: ${{ secrets.EMAIL }}"
-           echo "PASSWORD: ${{ secrets.PASSWORD }}"
+    # - name: Run Secret
+    #   env:
+    #     EMAIL: ${{ secrets.EMAIL}}
+    #     PASSWORD: ${{ secrets.PASSWORD}}
+    #   run: |
+    #        echo "EMAIL: ${{ secrets.EMAIL }}"
+    #        echo "PASSWORD: ${{ secrets.PASSWORD }}"
           
     - name: Run Playwright tests
       run:  yarn playwright test
