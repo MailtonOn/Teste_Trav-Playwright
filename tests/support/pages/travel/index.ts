@@ -175,15 +175,24 @@ export class TravPage {
 
 
     async searchTicket() {
+
+        const selectors = [
+            '.flight-desktop-info',
+            '.flight-fare-button',
+            '.flight-desktop-info',
+            '.flight-fare-button'
+        ]
+        
+
+
         await this.page.getByRole('button', { name: "Buscar Passagem", exact: true }).nth(0).click()
         await expect(this.page.locator('#swal2-content')).toHaveText('Na Onfly, todo cuidado é pouco para garantir as melhores condições e passagens para você!', { timeout: 60000 })
 
-        const nth = 'nth'
-
-        await this.page.click(`.flight-desktop-info >> ${nth}=0`)
-        await this.page.click(`.flight-fare-button >> ${nth}=0`, { delay: 3000 })
-        await this.page.click(`.flight-desktop-info >> ${nth}=0`, { delay: 3000 })
-        await this.page.click(`.flight-fare-button >> ${nth}=0`, { delay: 10000 })
+        for (let i = 0; i < selectors.length; i++) {
+            const selector = selectors[i];
+            
+            await this.page.click(`${selector} >> nth=0`, { delay: 3000 })
+        }
         await this.page.getByRole('button', { name: "Prosseguir", exact: true }).nth(0).click()
 
 
