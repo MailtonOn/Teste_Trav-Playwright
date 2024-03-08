@@ -18,10 +18,15 @@ export class TravPage {
         await this.page.hover('li[data-id="5"]')
 
         await this.page.click('#nav-sub-item:has-text("Colaboradores")')
+        
+    }
+
+    async toEmployees() {
+        await this.page.click('.q-btn__wrapper:has-text("Colaborador")')
     }
 
     async fillEmployees(payload) {
-        await this.page.click('.q-btn__wrapper:has-text("Colaborador")')
+        
 
         const selectors = [
             '.q-placeholder',
@@ -102,10 +107,8 @@ export class TravPage {
         let fieldControl = '.q-field__control'
         let itemSection = '.q-item__section'
 
-        const nth = 'nth'
-
-        await this.page.waitForSelector(`${fieldControl} >> ${nth}=0`, { state: 'visible' })
-        await this.page.fill(`${fieldControl} >> ${nth}=0`, payload.FistName)
+        await this.page.waitForSelector(`${fieldControl} >> nth=0`, { state: 'visible' })
+        await this.page.fill(`${fieldControl} >> nth=0`, payload.FistName)
         await this.page.click(`${itemSection}:has-text("${payload.FistName}")`)
 
     }
@@ -188,7 +191,7 @@ export class TravPage {
 
 
         await this.page.getByRole('button', { name: "Buscar Passagem", exact: true }).nth(0).click()
-        await expect(this.page.locator('#swal2-content')).toHaveText('Na Onfly, todo cuidado é pouco para garantir as melhores condições e passagens para você!', { timeout: 60000 })
+        await expect(this.page.locator('#swal2-content')).toHaveText('Na Onfly, todo cuidado é pouco para garantir as melhores condições e passagens para você!', { timeout: 30000 })
 
         for (let i = 0; i < selectors.length; i++) {
             const selector = selectors[i];
@@ -196,9 +199,9 @@ export class TravPage {
             await this.page.click(`${selector} >> nth=0`, { delay: 3000 })
         }
         await this.page.getByRole('button', { name: "Prosseguir", exact: true }).nth(0).click()
-
-
+        await expect(this.page.locator('#swal2-content')).toHaveText('Estamos validando as tarifas', { timeout: 30000 })
     }
+
 
     async filltraveler(payload) {
         const selectors = [
@@ -233,10 +236,7 @@ export class TravPage {
     }
 
 
-    async successTicket() {
-        await expect(this.page.locator('#swal2-content')).toHaveText('')
-        await expect(this.page.locator('#swal2-content')).toHaveText('')
 
-    }
+
 }
 
