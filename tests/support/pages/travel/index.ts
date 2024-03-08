@@ -32,6 +32,7 @@ export class TravPage {
             '.q-placeholder',
             '.q-placeholder',
             '.q-placeholder',
+            '.q-placeholder',
             '.q-placeholder.col'
         ]
 
@@ -44,10 +45,11 @@ export class TravPage {
             faker.finance.accountNumber(),
             faker.internet.email(),
             payload.birthdate,
+            faker.finance.accountNumber(),
             payload.function
         ]
 
-        const nthIndices = [1, 2, 3, 4, 5, 7, 9, 10, 1]
+        const nthIndices = [1, 2, 3, 4, 5, 7, 9, 10, 13, 1]
 
         for (let i = 0; i < selectors.length; i++) {
             const selector = selectors[i];            
@@ -78,9 +80,9 @@ export class TravPage {
 
     async fillInvite(payload) {
 
-        const selectors = ['.q-placeholder', '.q-placeholder.col'];
-        const fieldValues = [faker.internet.email(), payload.function];
-        const nthIndices = [1, 0]
+        const selectors = ['.q-placeholder', '.q-placeholder', '.q-placeholder.col'];
+        const fieldValues = [faker.internet.email(), faker.finance.accountNumber(), payload.function];
+        const nthIndices = [1, 2, 0]
         for (let i = 0; i < selectors.length; i++) {
             const selector = selectors[i];
             await this.page.fill(`${selector} >> nth=${nthIndices[i]}`, fieldValues[i]);
