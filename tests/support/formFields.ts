@@ -15,8 +15,9 @@ const commonSelectors = [
   ];
 
 export const getEmployeeFields = (payload) => {
+  const inviteSelectors = commonSelectors.slice(0, 10);
   return {
-    selectors:  commonSelectors,
+    selectors:  inviteSelectors,
     values: [
       faker.person.fullName(),
       faker.person.firstName(),
@@ -34,8 +35,9 @@ export const getEmployeeFields = (payload) => {
 };
 
 export const getInviteFields = (payload) => {
+  const inviteSelectors = commonSelectors.slice(0, 3);
   return {
-    selectors: commonSelectors,
+    selectors: inviteSelectors,
     values: [faker.internet.email(), faker.finance.accountNumber(), payload.function],
     nthIndices: [1, 2, 4]
   };

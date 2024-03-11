@@ -1,7 +1,5 @@
 import { Page, expect } from '@playwright/test';
 import { dateComponents } from '../../support/helpers';
-import { generate } from 'gerador-validador-cpf';
-import { faker } from '@faker-js/faker';
 import { getEmployeeFields, getInviteFields, getTravelerFields } from '../../support/formFields';
 
 export class TravPage {
