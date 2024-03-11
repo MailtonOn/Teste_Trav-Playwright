@@ -1,7 +1,7 @@
 import { test } from '@playwright/test'
-import { HomePage } from '../support/pages/home'
-import { LoginPage } from '../support/pages/login'
-import { TravPage } from '../support/pages/travel'
+import { HomePage } from '../pages/home'
+import { LoginPage } from '../pages/login'
+import { TravPage } from '../pages/travel'
 import { EmployeeModel, TravelModel, GoTravelModel } from '../fixtures/travel.model'
 import travel from '../fixtures/travel.json'
 

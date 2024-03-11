@@ -1,7 +1,8 @@
 import { Page, expect } from '@playwright/test';
-import { dateComponents } from '../../helpers';
+import { dateComponents } from '../../support/helpers';
 import { generate } from 'gerador-validador-cpf';
 import { faker } from '@faker-js/faker';
+import { getEmployeeFields, getInviteFields, getTravelerFields } from '../../support/formFields';
 
 export class TravPage {
 
@@ -25,45 +26,17 @@ export class TravPage {
         await this.page.click('.q-btn__wrapper:has-text("Colaborador")')
     }
 
-    async fillEmployees(payload) {
-        
-
-        const selectors = [
-            '.q-placeholder',
-            '.q-placeholder',
-            '.q-placeholder',
-            '.q-placeholder',
-            '.q-placeholder',
-            '.q-placeholder',
-            '.q-placeholder',
-            '.q-placeholder',
-            '.q-placeholder',
-            '.q-placeholder.col'
-        ]
-
-        const fieldValues = [
-            faker.person.fullName(),
-            faker.person.firstName(),
-            faker.person.lastName(),
-            generate(),
-            payload.nationality,
-            faker.finance.accountNumber(),
-            faker.internet.email(),
-            payload.birthdate,
-            faker.finance.accountNumber(),
-            payload.function
-        ]
-
-        const nthIndices = [1, 2, 3, 4, 5, 7, 9, 10, 13, 1]
-
+    async fillForm(fields: { selectors: string[]; values: string[]; nthIndices:number[]; }) {
+        const { selectors,  values, nthIndices } = fields;
         for (let i = 0; i < selectors.length; i++) {
-            const selector = selectors[i];            
-
-            await this.page.fill(`${selector} >> nth=${nthIndices[i]}`, fieldValues[i]);
-
+            await this.page.fill(`${selectors[i]} >> nth=${nthIndices[i]}`, values[i]);
         }
+      }
 
-       
+    async fillEmployees(payload) {
+        const fields =   getEmployeeFields(payload);
+
+        await this.fillForm(fields);
         await this.page.click(`.q-item__section:has-text("${payload.function}")`);
 
 
@@ -85,14 +58,9 @@ export class TravPage {
 
     async fillInvite(payload) {
 
-        const selectors = ['.q-placeholder', '.q-placeholder', '.q-placeholder.col'];
-        const fieldValues = [faker.internet.email(), faker.finance.accountNumber(), payload.function];
-        const nthIndices = [1, 2, 0]
-        for (let i = 0; i < selectors.length; i++) {
-            const selector = selectors[i];
-            await this.page.fill(`${selector} >> nth=${nthIndices[i]}`, fieldValues[i]);
-        }
-
+        const fields = getInviteFields(payload);
+        
+        await this.fillForm(fields);
         await this.page.click(`.q-item__section:has-text("${payload.function}")`)
 
     }
@@ -204,35 +172,10 @@ export class TravPage {
 
 
     async filltraveler(payload) {
-        const selectors = [
-            '.q-validation-component',
-            '.q-validation-component',
-            '.q-validation-component',
-            '.q-validation-component',
-            '.q-validation-component',
-            '.q-validation-component',
-            '.q-validation-component'
+        const fields =   getTravelerFields(payload);
 
-        ]
-
-        const fieldValues = [
-            faker.person.fullName(),
-            faker.person.firstName(),
-            faker.internet.email(),
-            generate(),
-            payload.birthdate,
-            faker.phone.number(),
-            faker.finance.accountNumber()
-
-        ]
-        const nthIndices = [0, 1, 2, 3, 4, 5, 8]
-
-        for (let i = 0; i < selectors.length; i++) {
-            const selector = selectors[i];
-
-
-            await this.page.fill(`${selector} >> nth=${nthIndices[i]}`, fieldValues[i]);
-        }
+        await this.page.fill('.q-placeholder >> nth=0', payload.firstName);
+        await this.page.click(`.q-item__section:has-text("${payload.firstName}")`);
     }
 
 
