@@ -2,22 +2,22 @@ import { faker } from '@faker-js/faker';
 import { generate } from 'gerador-validador-cpf';
 
 const commonSelectors = [
-    '.q-placeholder',
-    '.q-placeholder',
-    '.q-placeholder',
-    '.q-placeholder',
-    '.q-placeholder',
-    '.q-placeholder',
-    '.q-placeholder',
-    '.q-placeholder',
-    '.q-placeholder',
-    '.q-placeholder'
-  ];
+  '.q-placeholder',
+  '.q-placeholder',
+  '.q-placeholder',
+  '.q-placeholder',
+  '.q-placeholder',
+  '.q-placeholder',
+  '.q-placeholder',
+  '.q-placeholder',
+  '.q-placeholder',
+  '.q-placeholder'
+];
 
 export const getEmployeeFields = (payload) => {
   const inviteSelectors = commonSelectors.slice(0, 10);
   return {
-    selectors:  inviteSelectors,
+    selectors: inviteSelectors,
     values: [
       faker.person.fullName(),
       faker.person.firstName(),
@@ -44,11 +44,10 @@ export const getInviteFields = (payload) => {
 };
 
 export const getTravelerFields = (payload) => {
+  const inviteSelectors = commonSelectors.slice(0, 2);
   return {
-    selectors: commonSelectors,
-    values: [
-      payload.firstName,
-    ],
-    nthIndices: [0]
+    selectors: inviteSelectors,
+    values: [payload.lastName, payload.firstName],
+    nthIndices: [8, 0]
   };
 };

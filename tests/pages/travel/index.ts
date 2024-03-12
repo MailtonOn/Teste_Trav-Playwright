@@ -1,6 +1,7 @@
 import { Page, expect } from '@playwright/test';
 import { dateComponents } from '../../support/helpers';
 import { getEmployeeFields, getInviteFields, getTravelerFields } from '../../support/formFields';
+import { EmployeeModel, TravelModel } from '../../fixtures/travel.model';
 
 export class TravPage {
 
@@ -17,22 +18,22 @@ export class TravPage {
         await this.page.hover('li[data-id="5"]')
 
         await this.page.click('#nav-sub-item:has-text("Colaboradores")')
-        
+
     }
 
     async toEmployees() {
         await this.page.click('.q-btn__wrapper:has-text("Colaborador")')
     }
 
-    async fillForm(fields: { selectors: string[]; values: string[]; nthIndices:number[]; }) {
-        const { selectors,  values, nthIndices } = fields;
+    async fillForm(fields: { selectors: string[]; values: string[]; nthIndices: number[]; }) {
+        const { selectors, values, nthIndices } = fields;
         for (let i = 0; i < selectors.length; i++) {
             await this.page.fill(`${selectors[i]} >> nth=${nthIndices[i]}`, values[i]);
         }
-      }
+    }
 
-    async fillEmployees(payload) {
-        const fields =   getEmployeeFields(payload);
+    async fillEmployees(payload: EmployeeModel) {
+        const fields = getEmployeeFields(payload);
 
         await this.fillForm(fields);
         await this.page.click(`.q-item__section:has-text("${payload.function}")`);
@@ -54,10 +55,10 @@ export class TravPage {
         await this.page.click('.q-btn__wrapper:has-text("Convidar")')
     }
 
-    async fillInvite(payload) {
+    async fillInvite(payload: EmployeeModel) {
 
         const fields = getInviteFields(payload);
-        
+
         await this.fillForm(fields);
         await this.page.click(`.q-item__section:has-text("${payload.function}")`)
 
@@ -69,7 +70,7 @@ export class TravPage {
         await expect(this.page.locator('#swal2-content')).toHaveText('Usuário convidado')
     }
 
-    async fillPassenger(payload) {
+    async fillPassenger(payload: { FistName: string; }) {
         let fieldControl = '.q-field__control'
         let itemSection = '.q-item__section'
 
@@ -78,7 +79,7 @@ export class TravPage {
         await this.page.click(`${itemSection}:has-text("${payload.FistName}")`)
 
     }
-    async fillBookFlight(payload) {
+    async fillBookFlight(payload: TravelModel) {
 
         for (const char of payload.partida) {
             await this.page.fill('.q-field__control >> nth=0',
@@ -103,7 +104,7 @@ export class TravPage {
         await this.fillDate(payload.backDay)
     }
 
-    async fillDate(payload) {
+    async fillDate(payload: number) {
         const { day, month } = dateComponents(payload)
         const calendarIndex = await this.navigateToCorrectMonth(month)
 
@@ -153,27 +154,30 @@ export class TravPage {
             '.flight-desktop-info',
             '.flight-fare-button'
         ]
-        
+
 
 
         await this.page.getByRole('button', { name: "Buscar Passagem", exact: true }).nth(0).click()
-        await expect(this.page.locator('#swal2-content')).toHaveText('Na Onfly, todo cuidado é pouco para garantir as melhores condições e passagens para você!', { timeout: 30000 })
+        await expect(this.page.locator('#swal2-title')).toHaveText('Quase lá...', { timeout: 30000 })
 
         for (let i = 0; i < selectors.length; i++) {
             const selector = selectors[i];
-            
+
             await this.page.click(`${selector} >> nth=0`, { delay: 3000 })
         }
         await this.page.getByRole('button', { name: "Prosseguir", exact: true }).nth(0).click()
-        await expect(this.page.locator('#swal2-content')).toHaveText('Estamos validando as tarifas', { timeout: 30000 })
+        await expect(this.page.locator('#swal2-title')).toHaveText('Aguarde...', { timeout: 30000 })
     }
 
 
-    async filltraveler(payload) {
-        const fields =   getTravelerFields(payload);
+    async fillTraveler(payload: EmployeeModel) {
+        const fields = getTravelerFields(payload);
 
-        await this.page.fill('.q-placeholder >> nth=0', payload.firstName);
+        await this.fillForm(fields);
         await this.page.click(`.q-item__section:has-text("${payload.firstName}")`);
+        await this.page.getByRole('button', { name: "Reservar", exact: true }).nth(0).click();
+        await expect(this.page.locator('#swal2-title')).toHaveText('Aguarde...', { timeout: 30000 });
+        await expect(this.page.locator('#swal2-title')).toHaveText('Sucesso', { timeout: 30000 });
     }
 
 

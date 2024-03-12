@@ -1,10 +1,10 @@
 {
   "new": {
-    "Name": "Mailton Um",
-    "FistName": "Mailton",
-    "LastName": "Um",
+    "name": "Mailton Umteste",
+    "firstName": "Mailton",
+    "lastName": "Umteste",
     "nationality": "Brasileiro",
-    "Passport": "CS265436",
+    "passport": "CS265436",
     "RG": "13678490",
     "birthdate": "19-07-1988",
     "function": "Administrador",

@@ -1,11 +1,13 @@
 export interface EmployeeModel {
     name: string
-    fistName: string
+    firstName: string
     lastName: string
     nationality: string
     passport: string
     RG: string
     birthdate: string
+    function: String
+    email: string
 }
 
 export interface GoTravelModel {
@@ -18,6 +20,7 @@ export interface TravelModel {
     partida: string
     code1: string
     destino: string
+    code2: string
     goDay: number
     backDay: number
 }
