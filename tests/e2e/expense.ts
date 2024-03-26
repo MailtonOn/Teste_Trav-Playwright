@@ -1,7 +1,7 @@
 import { test } from '@playwright/test'
-import { LoginPage } from '../support/pages/login'
+import { LoginPage } from '../pages/login'
 import { ExpenseModel } from '../fixtures/expense.model'
-import { ExpensePage } from '../support/pages/expense'
+import { ExpensePage } from '../pages/expense'
 import expenses from '../fixtures/expenses.json'
 
 let loginPage: LoginPage
