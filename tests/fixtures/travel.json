@@ -1,5 +1,5 @@
 {
-  "new": {
+  "employee": {
     "name": "Mailton Umteste",
     "firstName": "Mailton",
     "lastName": "Umteste",
@@ -16,7 +16,9 @@
   "goTravel": {
     "dataIdValue": "1",
     "button": "Reservar",
-    "title": "Reservar Aéreo"
+    "button1": "Automóvel",
+    "titleAir": "Reservar Aéreo",
+    "titleCar": "Reservar Automóvel"
   },
   "aereo": {
     "select": "Passageiros",
@@ -26,5 +28,10 @@
     "code2": "TODOS",
     "goDay": 97,
     "backDay": 114
+  },
+  "Automobile": {
+
   }
+
+
 }

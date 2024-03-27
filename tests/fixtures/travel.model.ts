@@ -10,10 +10,16 @@ export interface EmployeeModel {
     email: string
 }
 
+export interface ToInviteModel {
+    function: string
+}
+
 export interface GoTravelModel {
     dataIdValue: string,
     button: string,
-    title: string
+    button1: string,
+    titleAir: string,
+    titleCar: string
 }
 
 export interface TravelModel {

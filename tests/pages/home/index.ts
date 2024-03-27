@@ -14,8 +14,15 @@ export class HomePage {
         await this.page.hover(`li[data-id="${payload.dataIdValue}"]`)
 
         await this.page.click(`#nav-sub-item:has-text("${payload.button}")`)
+    }
 
+    async goFlight(payload) {
         await this.page.waitForSelector('.title-card', { state: 'visible', timeout: 3000 })
-        await expect(this.page.locator('.title-card')).toHaveText(payload.title)
+        await expect(this.page.locator('.title-card')).toHaveText(payload.titleAir)
+    }
+
+    async goAutomobile(payload) {
+        await this.page.waitForSelector('.title-card', { state: 'visible', timeout: 3000 })
+        await this.page.click(`.q-tab__label:has-text("${payload.button1}")`)
     }
 }

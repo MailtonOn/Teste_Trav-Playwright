@@ -86,8 +86,8 @@ export class TravPage {
                 await this.page.inputValue('.q-field__control >> nth=0') + char)
             await this.page.waitForTimeout(200)
         }
-        await this.page.waitForSelector(`.q-item__section:has-text("${payload.code1}")`)
-        await this.page.click(`.q-item__section:has-text("${payload.code1}")`)
+        await this.page.waitForSelector(`.q-item__section:has-text("${payload.partida}")`)
+        await this.page.click(`.q-item__section:has-text("${payload.partida}")`)
 
         for (const char of payload.destino) {
             await this.page.fill('.q-field__control >> nth=1',
@@ -96,6 +96,37 @@ export class TravPage {
         }
         await this.page.waitForSelector(`.q-item__section:has-text("${payload.code2}")`)
         await this.page.click(`.q-item__section:has-text("${payload.code2}")`)
+
+        await this.page.getByPlaceholder('Datas de Ida e Volta').click()
+        await expect(this.page.locator('#calendarsModal')).toBeEnabled()
+
+        await this.fillDate(payload.goDay)
+        await this.fillDate(payload.backDay)
+    }
+
+    async fillBookAutomobile(payload: TravelModel) {
+
+        await this.page.click(`.q-toggle__label:has-text('Devolver em outra localidade')`)
+        await this.page.getByRole('button', { name: "OK", exact: true }).click()
+
+        for (const char of payload.partida) {
+            await this.page.fill('.q-field__control >> nth=0',
+                await this.page.inputValue('.q-field__control >> nth=0') + char)
+            await this.page.waitForTimeout(200)
+        }
+        await this.page.waitForSelector(`.q-item:has-text("${payload.partida}")`)
+        await this.page.click(`.q-item:has-text("${payload.partida}")`)
+
+        await this.page.fill(`.q-field__control >> nth=1`, payload.partida)
+        await this.page.click(`.q-field__label:has-text("${payload.partida}")`)
+
+        for (const char of payload.destino) {
+            await this.page.fill('.q-field__control >> nth=4',
+                await this.page.inputValue('.q-field__control >> nth=4') + char)
+            await this.page.waitForTimeout(250)
+        }
+        await this.page.waitForSelector(`.q-item:has-text("${payload.destino}")`)
+        await this.page.click(`.q-item:has-text("${payload.destino}")`)
 
         await this.page.getByPlaceholder('Datas de Ida e Volta').click()
         await expect(this.page.locator('#calendarsModal')).toBeEnabled()

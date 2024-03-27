@@ -20,7 +20,7 @@ test.beforeEach(async ({ page }) => {
 test.describe('Travel test', () => {
   const trips = travel.goTravel as GoTravelModel
   test('Deve criar um novo colaborador', async () => {
-    const employee = travel.new as unknown as EmployeeModel
+    const employee = travel.employee as EmployeeModel
 
     await travPage.goToEmployees()
     await travPage.toEmployees()
@@ -29,18 +29,29 @@ test.describe('Travel test', () => {
     await travPage.successMessage()
   })
   test('Deve convidar um colaborador', async () => {
-    const Employee = travel.toInvite as unknown as EmployeeModel
+    const employee = travel.employee as EmployeeModel
     await travPage.goToEmployees()
     await travPage.toInvite()
-    await travPage.fillInvite(Employee)
+    await travPage.fillInvite(employee)
     await travPage.sendInvite()
   })
   test('Deve fazer uma reserva de aereo ida e volta', async () => {
     const trip = travel.aereo as TravelModel
-    const employee = travel.new as EmployeeModel
+    const employee = travel.employee as EmployeeModel
     await homePage.goTo(trips)
+    await homePage.goFlight(trips)
     await travPage.fillBookFlight(trip)
     await travPage.searchTicket()
     await travPage.fillTraveler(employee)
   })
+  test('Deve fazer um reserva de Automóvel', async () => {
+    const employee = travel.employee as EmployeeModel
+    const trip = travel.aereo as TravelModel
+    await homePage.goTo(trips)
+    await homePage.goAutomobile(trips)
+    await travPage.fillBookAutomobile(trip)
+    
+  })
+
+
 })
