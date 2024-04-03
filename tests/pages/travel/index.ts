@@ -132,23 +132,31 @@ export class TravPage {
   }
 
   async fillBookAutomobile(payload: TravelModel) {
-    await this.page.click(
-      `.q-toggle__label:has-text('Devolver em outra localidade')`
-    );
-    await this.page.getByRole("button", { name: "OK", exact: true }).click();
 
     for (const char of payload.partida) {
       await this.page.fill(
-        ".q-field__control >> nth=0",
-        (await this.page.inputValue(".q-field__control >> nth=0")) + char
+        ".q-field__input",
+        (await this.page.inputValue(".q-field__input")) + char
       );
       await this.page.waitForTimeout(200);
     }
-    await this.page.waitForSelector(`.q-item:has-text("${payload.partida}")`);
-    await this.page.click(`.q-item:has-text("${payload.partida}")`);
+    // await this.page.waitForSelector(`.q-item:has-text("${payload.partida}")`);
+    // await this.page.click(`.q-item:has-text("${payload.partida}")`);
 
-    await this.page.fill(`.q-field__control >> nth=1`, payload.partida);
-    await this.page.click(`.q-field__label:has-text("${payload.partida}")`);
+    // await this.page.fill(`.q-field__control >> nth=1`, payload.partida);
+    // await this.page.click(`.q-field__label:has-text("${payload.partida}")`);
+
+    await this.page.getByPlaceholder("Datas de Ida e Volta").click();
+    await expect(this.page.locator("#calendarsModal")).toBeEnabled();
+
+    await this.fillDate(payload.goDay);
+    await this.fillDate(payload.backDay);
+  }
+  async fillBookAutoToggle(payload: TravelModel){
+    await this.page.click(
+      `#rental-car-search-toggle-different-return-location('Devolver em outra localidade')`
+    );
+    await this.page.getByRole("button", { name: "OK", exact: true }).click();
 
     for (const char of payload.destino) {
       await this.page.fill(
@@ -160,11 +168,7 @@ export class TravPage {
     await this.page.waitForSelector(`.q-item:has-text("${payload.destino}")`);
     await this.page.click(`.q-item:has-text("${payload.destino}")`);
 
-    await this.page.getByPlaceholder("Datas de Ida e Volta").click();
-    await expect(this.page.locator("#calendarsModal")).toBeEnabled();
 
-    await this.fillDate(payload.goDay);
-    await this.fillDate(payload.backDay);
   }
 
   async fillDate(payload: number) {

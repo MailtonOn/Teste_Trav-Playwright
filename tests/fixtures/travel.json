@@ -16,7 +16,7 @@
   "goTravel": {
     "dataIdValue": "1",
     "button": "Reservar",
-    "button1": "Automóvel",
+    "button1": "Carro",
     "titleAir": "Reservar Aéreo",
     "titleCar": "Reservar Automóvel"
   },

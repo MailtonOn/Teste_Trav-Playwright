@@ -25,7 +25,7 @@ export default defineConfig({
   timeout: 900000,
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'https://travel.onfly.com.br/',
+    baseURL: 'https://onfly-homol.viagens.dev/v2#/home',
     permissions: ['geolocation'],
   
 

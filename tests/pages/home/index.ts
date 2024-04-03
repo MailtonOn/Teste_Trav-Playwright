@@ -22,7 +22,7 @@ export class HomePage {
     }
 
     async goAutomobile(payload) {
-        await this.page.waitForSelector('.title-card', { state: 'visible', timeout: 3000 })
-        await this.page.click(`.q-tab__label:has-text("${payload.button1}")`)
+        await this.page.waitForSelector('#header-search-form', { state: 'visible', timeout: 30000 })
+        await this.page.click(`#tab-rentalCars-search-tab-list:has-text("${payload.button1}")`)
     }
 }
