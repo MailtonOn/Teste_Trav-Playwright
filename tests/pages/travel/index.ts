@@ -6,6 +6,7 @@ import {
   getTravelerFields,
 } from "../../support/formFields";
 import { EmployeeModel, TravelModel } from "../../fixtures/travel.model";
+import { faker } from '@faker-js/faker'
 
 export class TravPage {
   readonly page: Page;
@@ -140,19 +141,23 @@ export class TravPage {
       );
       await this.page.waitForTimeout(200);
     }
-    // await this.page.waitForSelector(`.q-item:has-text("${payload.partida}")`);
-    // await this.page.click(`.q-item:has-text("${payload.partida}")`);
+    await this.page.waitForSelector(`.onf-input-destination__item__left-content:has-text("${payload.partida}")`);
+    await this.page.click(`.onf-input-destination__item__left-content:has-text("${payload.partida}")`);
 
-    // await this.page.fill(`.q-field__control >> nth=1`, payload.partida);
-    // await this.page.click(`.q-field__label:has-text("${payload.partida}")`);
-
-    await this.page.getByPlaceholder("Datas de Ida e Volta").click();
-    await expect(this.page.locator("#calendarsModal")).toBeEnabled();
+    await this.page.getByPlaceholder("Selecione uma data").click();
+    // await expect(this.page.locator("#calendarsModal")).toBeEnabled();
 
     await this.fillDate(payload.goDay);
     await this.fillDate(payload.backDay);
+
+    await this.page.waitForSelector('#rental-car-search-input-return-hours >> nth=0', {
+      state: "visible",
+      timeout: 3000,
+    });
+    await this.page.click(`#rental-car-search-input-return-hours >> nth=0`, {timeout: 3000})
+    await this.page.click(`.onf-select__field__popup__item:has-text("13:30")`)
   }
-  async fillBookAutoToggle(payload: TravelModel){
+  async fillBookAutoToggle(payload: TravelModel) {
     await this.page.click(
       `#rental-car-search-toggle-different-return-location('Devolver em outra localidade')`
     );
@@ -176,12 +181,13 @@ export class TravPage {
     const calendarIndex = await this.navigateToCorrectMonth(month);
 
     await this.navigateToCorrectMonth(month);
-    await this.selectDay(calendarIndex, day);
+    await this.selectDay(day);
   }
 
-  async selectDay(calendarIndex: number, day: number) {
-    const selector = `#calendar${calendarIndex} .q-btn__content:has(.block:text-is("${day}"))`;
-    await this.page.waitForSelector(selector, { state: "visible" });
+  async selectDay( day: number) {
+    day = faker.number.int(122)
+    const selector = `.onf-month__day >> nth=${day}`;
+    await this.page.waitForSelector(selector, { state: "visible", timeout: 5000 });
     await this.page.click(selector);
   }
 
@@ -192,25 +198,24 @@ export class TravPage {
 
     while (true) {
       await this.page.waitForSelector(
-        `#calendar${calendarIndex} .q-date__header-subtitle`,
+        `.onf-date-picker-desktop__container__body__controls__section__current-page__month`,
         { state: "attached" }
       );
 
       let monthText = await this.page.textContent(
-        `#calendar${calendarIndex} .q-date__header-subtitle`
+        `.onf-date-picker-desktop__container__body__controls__section__current-page__month`
       );
 
       if (monthText) {
         monthText =
           monthText.trim().charAt(0).toUpperCase() + monthText.trim().slice(1);
         if (monthText.includes(expectedMonth)) {
-          console.log(`Mês encontrado: ${monthText}`);
           return calendarIndex;
         }
       }
 
       if (calendarIndex === 2) {
-        await this.page.click(".q-btn--standard >> nth=1");
+        await this.page.click("#button-next-month-date-picker-rental-car-search-input-withdraw-date-picker");
         calendarIndex = 1;
       } else {
         calendarIndex++;
@@ -227,7 +232,7 @@ export class TravPage {
     ];
 
     await this.page
-      .getByRole("button", { name: "Buscar Passagem", exact: true })
+      .getByRole("button", { name: "Buscar", exact: true })
       .nth(0)
       .click();
     await expect(this.page.locator("#swal2-title")).toHaveText("Quase lá...", {
