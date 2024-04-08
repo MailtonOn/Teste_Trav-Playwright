@@ -132,7 +132,7 @@ export class TravPage {
     await this.fillDate(payload.backDay);
   }
 
-  async fillBookAutomobile(payload: TravelModel) {
+  async fillBookAuto(payload: TravelModel) {
 
     for (const char of payload.partida) {
       await this.page.fill(
@@ -141,7 +141,7 @@ export class TravPage {
       );
       await this.page.waitForTimeout(200);
     }
-    await this.page.waitForSelector(`.onf-input-destination__item__left-content:has-text("${payload.partida}")`);
+    await this.page.waitForSelector(`.onf-input-destination__item__left-content:has-text("${payload.partida}")`, {timeout:3000});
     await this.page.click(`.onf-input-destination__item__left-content:has-text("${payload.partida}")`);
 
     await this.page.getByPlaceholder("Selecione uma data").click();
@@ -223,7 +223,7 @@ export class TravPage {
     }
   }
 
-  async searchTicket() {
+  async searchTicketFlight() {
     const selectors = [
       ".flight-desktop-info",
       ".flight-fare-button",
@@ -235,7 +235,7 @@ export class TravPage {
       .getByRole("button", { name: "Buscar", exact: true })
       .nth(0)
       .click();
-    await expect(this.page.locator("#swal2-title")).toHaveText("Quase lá...", {
+    await expect(this.page.locator("#header-dialog-loading-search-card")).toHaveText("Quase lá...", {
       timeout: 30000,
     });
 
@@ -248,7 +248,37 @@ export class TravPage {
       .getByRole("button", { name: "Prosseguir", exact: true })
       .nth(0)
       .click();
-    await expect(this.page.locator("#swal2-title")).toHaveText("Aguarde...", {
+    await expect(this.page.locator("#header-dialog-loading-search-card")).toHaveText("Aguarde...", {
+      timeout: 30000,
+    });
+  }
+
+  async searchTicketAuto() {
+    const selectors = [
+      ".flight-desktop-info",
+      ".flight-fare-button",
+      ".flight-desktop-info",
+      ".flight-fare-button",
+    ];
+
+    await this.page
+      .getByRole("button", { name: "Buscar", exact: true })
+      .nth(0)
+      .click();
+    await expect(this.page.locator("#onf-dialog__title")).toHaveText("Estamos procurando...", {
+      timeout: 6000,
+    });
+
+    for (let i = 0; i < selectors.length; i++) {
+      const selector = selectors[i];
+
+      await this.page.click(`${selector} >> nth=0`, { delay: 3000 });
+    }
+    await this.page
+      .getByRole("button", { name: "Prosseguir", exact: true })
+      .nth(0)
+      .click();
+    await expect(this.page.locator("#onf-dialog__title")).toHaveText("Aguarde...", {
       timeout: 30000,
     });
   }

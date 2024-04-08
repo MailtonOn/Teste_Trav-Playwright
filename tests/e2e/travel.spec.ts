@@ -41,7 +41,7 @@ test.describe('Travel test', () => {
     await homePage.goTo(trips)
     await homePage.goFlight(trips)
     await travPage.fillBookFlight(trip)
-    await travPage.searchTicket()
+    await travPage.searchTicketFlight()
     await travPage.fillTraveler(employee)
   })
   test.only('Deve fazer um reserva de Automóvel', async () => {
@@ -49,8 +49,8 @@ test.describe('Travel test', () => {
     const trip = travel.aereo as TravelModel
     await homePage.goTo(trips)
     await homePage.goAutomobile(trips)
-    await travPage.fillBookAutomobile(trip)
-    await travPage.searchTicket()
+    await travPage.fillBookAuto(trip)
+    await travPage.searchTicketAuto()
     
   })
 
