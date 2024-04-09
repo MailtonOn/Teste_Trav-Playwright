@@ -7,6 +7,7 @@ import {
 } from "../../support/formFields";
 import { EmployeeModel, TravelModel } from "../../fixtures/travel.model";
 import { faker } from '@faker-js/faker'
+import { max, min } from "date-fns";
 
 export class TravPage {
   readonly page: Page;
@@ -134,15 +135,15 @@ export class TravPage {
 
   async fillBookAuto(payload: TravelModel) {
 
-    for (const char of payload.partida) {
+    for (const char of payload.destino) {
       await this.page.fill(
         ".q-field__input",
         (await this.page.inputValue(".q-field__input")) + char
       );
-      await this.page.waitForTimeout(200);
+      await this.page.waitForTimeout(300);
     }
-    await this.page.waitForSelector(`.onf-input-destination__item__left-content:has-text("${payload.partida}")`, {timeout:3000});
-    await this.page.click(`.onf-input-destination__item__left-content:has-text("${payload.partida}")`);
+    await this.page.waitForSelector(`.onf-input-destination__item__left-content:has-text("${payload.destino}")`, { timeout: 4000 });
+    await this.page.click(`.onf-input-destination__item__left-content:has-text("${payload.destino}")`);
 
     await this.page.getByPlaceholder("Selecione uma data").click();
     // await expect(this.page.locator("#calendarsModal")).toBeEnabled();
@@ -154,7 +155,7 @@ export class TravPage {
       state: "visible",
       timeout: 3000,
     });
-    await this.page.click(`#rental-car-search-input-return-hours >> nth=0`, {timeout: 3000})
+    await this.page.click(`#rental-car-search-input-return-hours >> nth=0`, { timeout: 3000 })
     await this.page.click(`.onf-select__field__popup__item:has-text("13:30")`)
   }
   async fillBookAutoToggle(payload: TravelModel) {
@@ -184,8 +185,8 @@ export class TravPage {
     await this.selectDay(day);
   }
 
-  async selectDay( day: number) {
-    day = faker.number.int(122)
+  async selectDay(day: number) {
+    day = faker.number.int({ min: 35, max: 122 })
     const selector = `.onf-month__day >> nth=${day}`;
     await this.page.waitForSelector(selector, { state: "visible", timeout: 5000 });
     await this.page.click(selector);
@@ -254,32 +255,29 @@ export class TravPage {
   }
 
   async searchTicketAuto() {
-    const selectors = [
-      ".flight-desktop-info",
-      ".flight-fare-button",
-      ".flight-desktop-info",
-      ".flight-fare-button",
-    ];
 
     await this.page
       .getByRole("button", { name: "Buscar", exact: true })
       .nth(0)
       .click();
-    await expect(this.page.locator("#onf-dialog__title")).toHaveText("Estamos procurando...", {
-      timeout: 6000,
-    });
-
-    for (let i = 0; i < selectors.length; i++) {
-      const selector = selectors[i];
-
-      await this.page.click(`${selector} >> nth=0`, { delay: 3000 });
-    }
+    await expect(this.page.locator(".onf-dialog__title")).toHaveText("Estamos procurando...", {timeout: 7000});
     await this.page
-      .getByRole("button", { name: "Prosseguir", exact: true })
-      .nth(0)
+      .getByRole("button", { name: "Selecionar", exact: true })
+      .nth(2)
       .click();
-    await expect(this.page.locator("#onf-dialog__title")).toHaveText("Aguarde...", {
-      timeout: 30000,
+
+    await this.page.click(`#agencyInputSelect`)
+    await this.page.click(`.onf-select__field__popup__item >> nth=0`)
+
+    // await this.page
+    //   .getByRole("button", { name: "Selecionar", exact: true })
+    //   .nth(0)
+    //   .click();
+    await this.page.click(`#selectButton`)
+
+  
+    await expect(this.page.locator(".onf-dialog__title")).toHaveText("Processando", {
+      timeout: 3000,
     });
   }
 
