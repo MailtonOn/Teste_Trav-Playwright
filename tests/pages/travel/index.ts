@@ -49,6 +49,7 @@ export class TravPage {
     const fields = getEmployeeFields(payload);
 
     await this.fillForm(fields);
+    await this.page.click(`.q-placeholder'`)
     await this.page.click(`.q-item__section:has-text("${payload.function}")`);
   }
 

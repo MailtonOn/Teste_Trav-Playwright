@@ -10,12 +10,11 @@ const commonSelectors = [
   '.q-placeholder',
   '.q-placeholder',
   '.q-placeholder',
-  '.q-placeholder',
   '.q-placeholder'
 ];
 
 export const getEmployeeFields = (payload) => {
-  const inviteSelectors = commonSelectors.slice(0, 10);
+  const inviteSelectors = commonSelectors.slice(0, 9);
   return {
     selectors: inviteSelectors,
     values: [
@@ -27,19 +26,18 @@ export const getEmployeeFields = (payload) => {
       faker.finance.accountNumber(),
       faker.internet.email(),
       payload.birthdate,
-      faker.finance.accountNumber(),
       payload.function
     ],
-    nthIndices: [1, 2, 3, 4, 5, 7, 9, 10, 13, 15]
+    nthIndices: [1, 2, 3, 4, 5, 7, 9, 10, 13 ]
   };
 };
 
 export const getInviteFields = (payload) => {
-  const inviteSelectors = commonSelectors.slice(0, 3);
+  const inviteSelectors = commonSelectors.slice(0, 2);
   return {
     selectors: inviteSelectors,
-    values: [faker.internet.email(), faker.finance.accountNumber(), payload.function],
-    nthIndices: [1, 2, 4]
+    values: [faker.internet.email(), payload.function],
+    nthIndices: [1, 2]
   };
 };
 
