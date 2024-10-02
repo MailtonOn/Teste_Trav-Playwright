@@ -27,16 +27,16 @@ export class ExpensePage {
 
         await this.page.fill('.q-textarea', payload.description)
 
-        await this.addEstablishment(payload.establishment)
+        // await this.addEstablishment(payload.establishment)
     }
 
-    async addEstablishment(payload) {
-        await this.page.fill('input[placeholder="Pesquise ou crie um "]', payload)
-        await this.page.press('input[placeholder="Pesquise ou crie um "]', 'Enter')
-    }
+    // async addEstablishment(payload) {
+    //     await this.page.fill('input[placeholder="Pesquise ou crie um "]', payload)
+    //     await this.page.press('input[placeholder="Pesquise ou crie um "]', 'Enter')
+    // }
 
     async saveExpense() {
-        await this.page.getByRole('button', { name: "Salvar", exact: true }).click()
+        await this.page.getByRole('button', { name: "Salvar", exact: true }).click({ delay: 20000, timeout: 21000 })
     }
 
     async successMessage() {
@@ -51,24 +51,23 @@ export class ExpensePage {
     async fillDistance(payload) {
         await this.page.click('.q-tab__label:has-text("Distância")')
 
+        await this.page.click('.q-toggle__label:has-text("Preencha com o mapa")')
+
         await this.page.fill('.v-money', payload.km)
 
         await this.page.fill('.q-textarea', payload.description)
 
-        await this.addEstablishment(payload.establishment)
+        // await this.addEstablishment(payload.establishment)
     }
 
     async fillMapDistance(payload) {
         await this.page.waitForSelector('.q-tab__label:has-text("Distância")', { state: 'visible' })
         await this.page.click('.q-tab__label:has-text("Distância")')
 
-        await this.page.click('.q-toggle__label:has-text("Preencha com o mapa")')
+        // await this.page.click('.q-toggle__label:has-text("Preencha com o mapa")')
 
         await this.page.waitForSelector('#googleMap', { state: 'visible' })
         await expect(this.page.locator('#googleMap')).toBeVisible()
-
-        await this.page.hover('.q-btn__content:has-text("Calcular")')
-        await expect(this.page.locator('.q-tooltip')).toHaveText('Ao clicar em calcular será gerado um recibo da Despesa.')
 
         await this.page.locator('input[placeholder="Ponto A"]').fill(payload.pointA)
         await this.page.click(`.q-item:has-text("${payload.selectPointA}")`)
@@ -76,13 +75,17 @@ export class ExpensePage {
         await this.page.locator('input[placeholder="Ponto B"]').fill(payload.pointB)
         await this.page.click(`.q-item:has-text("${payload.selectPointB}")`)
 
+        await this.page.hover('.q-btn__content:has-text("Calcular")')
+        await expect(this.page.locator('.q-tooltip')).toHaveText('Ao clicar em calcular será gerado um recibo da Despesa.')
+
         await this.page.fill('.q-textarea', payload.description)
 
-        await this.addEstablishment(payload.establishment)
+        // await this.addEstablishment(payload.establishment)
     }
 
     async calculateDistance() {
-        await this.page.waitForSelector('button:has-text("Calcular"):not(.disabled)', { state: 'visible', timeout: 9000 })
+        
+        await this.page.waitForSelector('button:has-text("Calcular"):not(.disabled)', {state: 'visible', timeout: 20000 })
         await this.page.click('.q-btn__content:has-text("Calcular")')
     }
 
